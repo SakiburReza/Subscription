@@ -1,11 +1,36 @@
 <script setup>
-import { FwbNavbar } from 'flowbite-vue'
-import { FwbBadge } from 'flowbite-vue'
+import { FwbNavbar, FwbBadge } from 'flowbite-vue'
+import { ref, onMounted } from 'vue'
+
+
+const currentDate = ref('');
+const currentTime = ref('');
+
+// Update the date and time every second
+onMounted(() => {
+  setInterval(() => {
+    const now = new Date();
+    currentDate.value = new Intl.DateTimeFormat('en-US', { 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric' 
+    }).format(now); // Format as "8 Dec, 2024"
+    
+    currentTime.value = now.toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+  }, 1000); // Update every second
+});
 </script>
 
 <template>
-  <fwb-navbar>
-    <fwb-badge size="xl" class="bg-white text-col-black">Dec 2, 2024 <br> 08:44:02</fwb-badge>
+<fwb-navbar :class="{ 'mobile-menu-hidden': true } ">
+    <fwb-badge size="xl" class="bg-white text-col-black"> 
+        <span>{{ currentDate }}
+        <br>
+        {{ currentTime }}</span>
+      </fwb-badge>
 
     <div class="flex flex-col items-center">
       <!-- Logo -->
