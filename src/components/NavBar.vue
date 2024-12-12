@@ -1,36 +1,54 @@
 <script setup>
-import { FwbNavbar, FwbBadge } from 'flowbite-vue'
-import { ref, onMounted } from 'vue'
+import { FwbNavbar, FwbBadge } from 'flowbite-vue';
+import { ref, onMounted } from 'vue';
 
-
+// Reactive variables for the current date and time
 const currentDate = ref('');
 const currentTime = ref('');
 
-// Update the date and time every second
+const isMenuOpen = ref(false);
+
+// Reactive array for menu items
+const menuItems = ref([
+  { text: "Home", href: "#", isActive: true },
+  { text: "Services", href: "#", isActive: true },
+  { text: "Pricing", href: "#", isActive: true },
+  { text: "Contact", href: "#", isActive: true },
+]);
+
 onMounted(() => {
-  setInterval(() => {
+  const updateTime = () => {
     const now = new Date();
-    currentDate.value = new Intl.DateTimeFormat('en-US', { 
-      day: 'numeric', 
-      month: 'short', 
-      year: 'numeric' 
+    currentDate.value = new Intl.DateTimeFormat('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
     }).format(now); // Format as "8 Dec, 2024"
-    
-    currentTime.value = now.toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
+
+    currentTime.value = now.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
     });
-  }, 1000); // Update every second
+  };
+
+  // Call the function immediately to show the time
+  updateTime();
+  setInterval(updateTime, 60000); // Update every minute
 });
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 </script>
 
+
 <template>
-<fwb-navbar :class="{ 'mobile-menu-hidden': true } ">
-    <fwb-badge size="xl" class="bg-white text-col-black"> 
+<!-- <fwb-navbar> -->
+<nav class="flex items-center justify-between space-x-4 px-6 py-4 relative">    
+  <fwb-badge class="bg-white text-col-black"> 
         <span>{{ currentDate }}
         <br>
         {{ currentTime }}</span>
-      </fwb-badge>
+    </fwb-badge>
 
     <div class="flex flex-col items-center">
       <!-- Logo -->
@@ -70,8 +88,43 @@ onMounted(() => {
         <p class="ml-2">1378</p>
       </fwb-badge>
     </div>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z" fill="black" />
-    </svg>
-  </fwb-navbar>
+
+    <!-------------------Hamburger Menu------------------------>
+    <button 
+      @click="toggleMenu"
+      type="button" 
+      class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      :aria-expanded="isMenuOpen"
+    >
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+      </svg>
+    </button>
+
+    <!-- Dropdown Menu -->
+    <div 
+      v-show="isMenuOpen"
+      class="absolute top-full right-3 mt-2 w-40 bg-white shadow-lg rounded-md z-50"
+    >
+      <ul class="flex flex-col space-y-2 p-2">
+        <li 
+          v-for="item in menuItems" 
+          :key="item.text"
+          class="p-2 hover:bg-gray-100 rounded"
+        >
+          <a 
+            :href="item.href" 
+            :class="{ 'text-blue-600 font-bold': item.isActive }" 
+            class="block"
+          >
+            {{ item.text }}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-------------------Hamburger Menu------------------------>
+
+<!--</fwb-navbar>-->
+</nav>
 </template>
