@@ -29,13 +29,15 @@ export default {
         danger: '#D94242',
         coal: {
           200: '#adadad',
+          400: '#C9C9C9',
           500: '#454546',
-          600: '#454546',
+          600: '#535353',
+          700: '#212121',
           800: '#232323',
           900: '#111111'
         },
         lightGray: '#EAEAEA',
-        lightBg:'#FBF9FA',
+        lightBg:'#F1F1F1',
         cardBg: 'var(--cardBg)',
         bodyColor: 'var(--bodyColor)',
         // -------------
@@ -57,7 +59,7 @@ export default {
         bodydark: '#AEB7C0',
         bodydark1: '#DEE4EE',
         bodydark2: '#8A99AF',
-
+        blue_Z: '#3536E1',
         stroke: '#E2E8F0',
 
         whiten: '#F1F5F9',
