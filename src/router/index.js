@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import SubscriptionPage from '@/views/SubscriptionPage.vue'
-import FooterZeuxis from '@/views/FooterZeuxis.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: FooterZeuxis,
+      component: SubscriptionPage,
     },
     // {
     //   path: '/about',

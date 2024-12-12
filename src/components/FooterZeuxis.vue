@@ -1,17 +1,37 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import genAiService from '@/services/gen-ai'
+
+const email = ref('')
+const onClick = async () => {
+  console.log('Email:', email.value)
+  try {
+    const { data: response } = await genAiService.temp(email.value)
+    console.log('API Response:', response)
+    if (response.status) {
+      console.log('Success')
+    }
+  } catch (error) {
+    console.error('Error calling API:', error)
+  }
+}
+</script>
 
 <template>
-  <div class="bg-coal-700 text-white py-6">
+  <div class="bg-coal-700 text-white py-6 mt-30">
     <div class="container mx-auto px-4">
       <!-- Large Screen Footer -->
       <div class="hidden lg:flex flex-col items-center space-y-10">
         <div class="flex items-center space-x-4">
           <input
-            type="email"
+            v-model="email"
             placeholder="Your email"
             class="w-80 bg-coal-600 placeholder-coal-400 text-white px-4 py-2 rounded-xl focus:outline-none"
           />
-          <button class="bg-blue_Z px-4 py-2 rounded-xl text-white hover:bg-blue-700">
+          <button
+            class="bg-blue_Z px-4 py-2 rounded-xl text-white hover:bg-blue-700"
+            @click="onClick"
+          >
             Get Early Access
           </button>
         </div>
@@ -37,65 +57,67 @@
       <div class="flex flex-col items-center space-y-4 lg:hidden">
         <div class="flex items-center space-x-4">
           <input
-            type="email"
+            v-model="email"
             placeholder="Your email"
-            class="bg-lightBg text-white px-4 py-2 rounded-xl focus:outline-none"
+            class="bg-lightBg text-black px-4 py-2 rounded-xl focus:outline-none"
           />
-          <button class="bg-blue_Z px-4 py-2 rounded-xl text-white hover:bg-blue-700">
+          <button
+            class="bg-blue_Z px-4 py-2 rounded-xl text-white hover:bg-blue-700"
+            @click="onClick"
+          >
             Claim Now
           </button>
         </div>
 
         <div class="flex space-x-6 text-sm">
-            <a href="https://x.com/zeuxisai?s=21&t=Mikls9HLe77mJGkbUeHWgg " class="hover:underline"
+          <a href="https://x.com/zeuxisai?s=21&t=Mikls9HLe77mJGkbUeHWgg " class="hover:underline">
+            <svg
+              width="29"
+              height="29"
+              viewBox="0 0 29 29"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-          <svg
-            width="29"
-            height="29"
-            viewBox="0 0 29 29"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_310_2838)">
-              <path
-                d="M27.7923 3.62494C26.6352 4.44115 25.354 5.06541 23.9982 5.47369C23.2704 4.63694 22.3033 4.04386 21.2275 3.77469C20.1517 3.50551 19.0192 3.57322 17.9832 3.96866C16.9471 4.36409 16.0575 5.06818 15.4347 5.98568C14.8118 6.90319 14.4858 7.98985 14.5007 9.09869V10.307C12.3772 10.3621 10.273 9.89113 8.37562 8.93611C6.47822 7.98108 4.84645 6.57163 3.62565 4.83328C3.62565 4.83328 -1.20768 15.7083 9.66732 20.5416C7.17879 22.2308 4.2143 23.0778 1.20898 22.9583C12.084 28.9999 25.3756 22.9583 25.3756 9.06244C25.3745 8.72587 25.3422 8.39012 25.279 8.05953C26.5122 6.84333 27.3825 5.30781 27.7923 3.62494Z"
-                stroke="#B3B3B3"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_310_2838">
-                <rect width="29" height="29" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </a>
-        <a href="https://www.instagram.com/zeuxis.ai?igsh=b3pndnhvcnoyaGFr ">
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 28 28"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_310_2787)">
-              <path
-                d="M20.4173 7.5835H20.429M8.16732 2.3335H19.834C23.0556 2.3335 25.6673 4.94517 25.6673 8.16683V19.8335C25.6673 23.0552 23.0556 25.6668 19.834 25.6668H8.16732C4.94566 25.6668 2.33398 23.0552 2.33398 19.8335V8.16683C2.33398 4.94517 4.94566 2.3335 8.16732 2.3335ZM18.6673 13.2652C18.8113 14.2361 18.6455 15.2277 18.1934 16.099C17.7413 16.9703 17.026 17.6768 16.1492 18.1181C15.2724 18.5594 14.2788 18.713 13.3097 18.5571C12.3406 18.4011 11.4454 17.9436 10.7513 17.2495C10.0572 16.5554 9.59967 15.6602 9.44373 14.6911C9.28779 13.722 9.44139 12.7284 9.8827 11.8516C10.324 10.9748 11.0305 10.2595 11.9018 9.80744C12.7731 9.35536 13.7647 9.18952 14.7357 9.3335C15.7261 9.48036 16.643 9.94187 17.351 10.6499C18.0589 11.3578 18.5205 12.2748 18.6673 13.2652Z"
-                stroke="#B3B3B3"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_310_2787">
-                <rect width="28" height="28" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-</a>
+              <g clip-path="url(#clip0_310_2838)">
+                <path
+                  d="M27.7923 3.62494C26.6352 4.44115 25.354 5.06541 23.9982 5.47369C23.2704 4.63694 22.3033 4.04386 21.2275 3.77469C20.1517 3.50551 19.0192 3.57322 17.9832 3.96866C16.9471 4.36409 16.0575 5.06818 15.4347 5.98568C14.8118 6.90319 14.4858 7.98985 14.5007 9.09869V10.307C12.3772 10.3621 10.273 9.89113 8.37562 8.93611C6.47822 7.98108 4.84645 6.57163 3.62565 4.83328C3.62565 4.83328 -1.20768 15.7083 9.66732 20.5416C7.17879 22.2308 4.2143 23.0778 1.20898 22.9583C12.084 28.9999 25.3756 22.9583 25.3756 9.06244C25.3745 8.72587 25.3422 8.39012 25.279 8.05953C26.5122 6.84333 27.3825 5.30781 27.7923 3.62494Z"
+                  stroke="#B3B3B3"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_310_2838">
+                  <rect width="29" height="29" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/zeuxis.ai?igsh=b3pndnhvcnoyaGFr ">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_310_2787)">
+                <path
+                  d="M20.4173 7.5835H20.429M8.16732 2.3335H19.834C23.0556 2.3335 25.6673 4.94517 25.6673 8.16683V19.8335C25.6673 23.0552 23.0556 25.6668 19.834 25.6668H8.16732C4.94566 25.6668 2.33398 23.0552 2.33398 19.8335V8.16683C2.33398 4.94517 4.94566 2.3335 8.16732 2.3335ZM18.6673 13.2652C18.8113 14.2361 18.6455 15.2277 18.1934 16.099C17.7413 16.9703 17.026 17.6768 16.1492 18.1181C15.2724 18.5594 14.2788 18.713 13.3097 18.5571C12.3406 18.4011 11.4454 17.9436 10.7513 17.2495C10.0572 16.5554 9.59967 15.6602 9.44373 14.6911C9.28779 13.722 9.44139 12.7284 9.8827 11.8516C10.324 10.9748 11.0305 10.2595 11.9018 9.80744C12.7731 9.35536 13.7647 9.18952 14.7357 9.3335C15.7261 9.48036 16.643 9.94187 17.351 10.6499C18.0589 11.3578 18.5205 12.2748 18.6673 13.2652Z"
+                  stroke="#B3B3B3"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_310_2787">
+                  <rect width="28" height="28" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
           <svg
             width="28"
             height="28"

@@ -2,52 +2,89 @@
 import { ref } from 'vue'
 import Navbar from '@/components/Navbar.vue'
 import genAiService from '@/services/gen-ai'
+import FooterZeuxis from '@/components/FooterZeuxis.vue'
 
 const email = ref('')
 
 const onClick = async () => {
-  console.log("Email:", email.value)
+  console.log('Email:', email.value)
   try {
     const { data: response } = await genAiService.temp(email.value)
-    console.log("API Response:", response)
+    console.log('API Response:', response)
     if (response.status) {
-      console.log("Success")
+      console.log('Success')
     }
   } catch (error) {
-    console.error("Error calling API:", error)
+    console.error('Error calling API:', error)
   }
 }
 </script>
 
 <template>
-  <div class=" flex-col h-screen">
+  <div class="flex flex-col h-screen">
     <Navbar />
-    <div class="relative flex items-center justify-start h-full px-4 sm:px-10 lg:pl-40 lg:justify-start">
-      <!-- Background Image -->
-      <img
-        class="absolute inset-0 object-cover sm:w-full sm:h-full w-full h-full "
-        src="/public/images/image 36.png"
-        alt="Background"
-      />
-      
-      <!-- Input Field and Button -->
-      <div
-        class="relative flex justify-start sm:flex-row p-0 sm:p-0 space-y-1 space-x-1 sm:space-y-0 sm:space-x-2 -mt-180 sm:mt-0"
-      >
-        <input
-          type="email"
-          v-model="email"
-          placeholder="Enter Your Work Email..."
-          class="sm:px-4 sm:py-2 text-gray-700 bg-white rounded-full sm:rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-60 sm:w-80"
-        />
-        <button
-          @click="onClick"
-          class="h-10 w-31 px-2 sm:px-4 sm:py-2 text-white bg-black rounded-full sm:rounded-r-full sm:w-auto hover:bg-gray-800"
+    <section class="bg-white text-center py-16">
+      <div class="container mx-auto px-4">
+        <!-- Heading Section -->
+        <h1 class="text-4xl font-extrabold text-black mb-4">
+          Be The First To <br />
+          Experience Zeuxis.
+        </h1>
+        <p class="text-black text-sm mb-8">
+          unlock exclusive 24 early access before the world sees it
+        </p>
+
+        <!-- Email Input Section -->
+        <div class="flex justify-center items-center space-x-4">
+          <input
+            v-model="email"
+            placeholder="Your email"
+            class="bg-gray-100 text-gray-700 placeholder-gray-400 px-4 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-80"
+          />
+          <button
+            class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            @click="onClick"
+          >
+            Claim Now
+          </button>
+        </div>
+      </div>
+    </section>
+    <div class="flex items-center justify-center h-auto md:h-screen">
+      <div class="flex flex-col items-center justify-center p-5">
+        <div
+          class="flex flex-col md:flex-row items-center w-full space-y-4 md:space-y-0 md:space-x-5"
         >
-          Subscribe
-        </button>
+          <span class="text-6xl font-bold text-blue_Z hidden md:block"> Images </span>
+          <div class="flex flex-col items-center">
+            <!-- Different Image for Mobile and Desktop -->
+            <img
+              src="/images/iphone.png"
+              alt="Media Item for Mobile"
+              class="object-cover block md:hidden"
+            />
+            <img
+              src="/images/web.png"
+              alt="Media Item for Desktop"
+              class="object-cover hidden md:block"
+            />
+            <!-- Mobile Version of Spans -->
+            <div class="flex flex-row justify-between w-full md:hidden mt-4">
+              <span class="text-4xl font-bold text-blue_Z ml-10">Images</span>
+              <span class="text-4xl font-bold text-lightGray mt-10 mr-8">Videos</span>
+            </div>
+            <div class="flex flex-col items-center space-y-2 mt-4 md:mt-0">
+              <span class="text-5xl font-bold text-black">just</span>
+              <span class="text-5xl font-bold text-blue_Z">#ZeuxIt</span>
+            </div>
+          </div>
+          <div>
+          <span class="text-6xl font-bold text-lightGray hidden md:block mt-40"> Videos </span>
+        </div>
+        </div>
       </div>
     </div>
+    <FooterZeuxis />
   </div>
 </template>
 

@@ -36,7 +36,7 @@ export default {
           800: '#232323',
           900: '#111111'
         },
-        lightGray: '#EAEAEA',
+        lightGray: '#DEDEDE',
         lightBg:'#F1F1F1',
         cardBg: 'var(--cardBg)',
         bodyColor: 'var(--bodyColor)',
